@@ -559,7 +559,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             user_manager.increment_downloads(user_id)
             
 # Send the file
-try:
     await processing_msg.delete()
 
     file_size = os.path.getsize(file_path) / (1024 * 1024)
