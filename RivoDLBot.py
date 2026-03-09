@@ -548,9 +548,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "age_restricted": "❌ *Age-restricted content.*",
                 "unknown": "❌ *Download failed.*\nPlease check the URL and try again."
             }
-        
-           
- try:
+try:
     await processing_msg.delete()
 
     file_size = os.path.getsize(file_path) / (1024 * 1024)
@@ -569,11 +567,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
 except Exception as e:
-    await update.message.reply_text(f"Error: {e}")
-
-except Exception as e:
     await update.message.reply_text(f"❌ Error: {e}")
-            
                          
            # Send stylish footer
                 footer = (
