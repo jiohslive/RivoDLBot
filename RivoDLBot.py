@@ -558,13 +558,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             # Increment download count
             user_manager.increment_downloads(user_id)
             
-            # Send the file
-            await processing_msg.delete()
-            
-            file_size = os.path.getsize(file_path) / (1024 * 1024)  # MB
-            file_name = os.path.basename(file_path)
-            
-            # Check file size for sending
+# Send the file
 try:
     await processing_msg.delete()
 
@@ -584,8 +578,9 @@ try:
             )
 
 except Exception as e:
-    print(e)
+    logger.error(e)
     await update.message.reply_text("❌ Download failed")
+
                 
                 # Send stylish footer
                 footer = (
