@@ -548,37 +548,32 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "age_restricted": "❌ *Age-restricted content.*",
                 "unknown": "❌ *Download failed.*\nPlease check the URL and try again."
             }
-            await processing_msg.edit_text(
-                error_messages.get(error, "❌ *Download failed.*"),
+        
+           try:
+    await processing_msg.delete()
+
+    file_size = os.path.getsize(file_path) / (1024 * 1024)  # MB
+    file_name = os.path.basename(file_path)
+
+    with open(file_path, 'rb') as f:
+        if extract_audio:
+            await update.message.reply_audio(
+                audio=f,
+                title=title[:50] + "..." if len(title) > 50 else title,
+                performer="Universal Downloader",
+                caption=f"🎵 *Converted to MP3*\n📏 Size: {file_size:.1f}MB",
                 parse_mode=ParseMode.MARKDOWN
             )
-            return
-        
-        if file_path:
-            # Increment download count
-            user_manager.increment_downloads(user_id)
+        else:
+            await update.message.reply_document(
+                document=f,
+                caption=f"📥 *Download Successful!*\n📏 Size: {file_size:.1f}MB",
+                parse_mode=ParseMode.MARKDOWN
+            )
+
+except Exception as e:
+    await update.message.reply_text(f"❌ Error: {e}")
             
-            # Send the file
-            await processing_msg.delete()
-
-file_size = os.path.getsize(file_path) / (1024 * 1024)  # MB
-file_name = os.path.basename(file_path)
-
-with open(file_path, 'rb') as f:
-    if extract_audio:
-        await update.message.reply_audio(
-            audio=f,
-            title=title[:50] + "..." if len(title) > 50 else title,
-            performer="Universal Downloader",
-            caption=f"🎵 *Converted to MP3*\n📏 Size: {file_size:.1f}MB",
-            parse_mode=ParseMode.MARKDOWN
-        )
-    else:
-        await update.message.reply_document(
-            document=f,
-            caption=f"📥 *Download Successful!*\n📏 Size: {file_size:.1f}MB",
-            parse_mode=ParseMode.MARKDOWN
-        )
                          
            # Send stylish footer
                 footer = (
