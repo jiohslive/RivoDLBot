@@ -549,7 +549,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "unknown": "❌ *Download failed.*\nPlease check the URL and try again."
             }
 
-            try:
+try:
     await processing_msg.delete()
 
     file_size = os.path.getsize(file_path) / (1024 * 1024)
