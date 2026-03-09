@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-"""
-Universal Media Downloader Bot
-Developer: @NEOBLADE70
-Version: 3.0 - Ultimate Edition
-"""
-
 import os
 import json
 import logging
@@ -37,9 +30,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configuration
-BOT_TOKEN = "8414275356:AAFOV_lJ9zP7pRtA-saCHwgsHolcmRKzysQ"  # Replace with your bot token
-ADMIN_ID = 7982420411  # Replace with your Telegram user ID
+# Configuration (ENV variables)
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))
+
 MAX_FILE_SIZE = 1000 * 1024 * 1024  # 1000MB
 COOLDOWN_SECONDS = 2
 DATA_FILE = "bot_data.json"
@@ -361,7 +355,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "⚡ *Fast & Reliable*\n"
         "💯 *Completely Free*\n"
         "🔒 *No Login Required*\n\n"
-        f"👨‍💻 *Developer:* @NEOBLADE70"
+        f"👨‍💻 *Developer:* @RivoBots"
     )
     
     try:
@@ -452,7 +446,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         about_text = (
             f"ℹ️ *About Bot*\n\n"
             f"🤖 *Name:* Universal Media Downloader\n"
-            f"👨‍💻 *Developer:* @NEOBLADE70\n"
+            f"👨‍💻 *Developer:* @RivoBots\n"
             f"📊 *Version:* 3.0 Ultimate\n\n"
             f"📈 *Global Stats:*\n"
             f"• Total Users: {total_users}\n"
@@ -600,7 +594,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 footer = (
                     f"╔════════════════════════════╗\n"
                     f"   © 2026 Universal Media Downloader\n"
-                    f"   👨‍💻 Developer: @NEOBLADE70\n"
+                    f"   👨‍💻 Developer: @RivoBots\n"
                     f"   📊 Download #{bot_data['total_downloads']:,}\n"
                     f"   ⏱️ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
                     f"╚════════════════════════════╝"
@@ -1241,7 +1235,7 @@ def main():
     print("""
     ╔════════════════════════════════════╗
     ║  Universal Media Downloader Bot    ║
-    ║  Developer: @NEOBLADE70            ║
+    ║  Developer: @RivoBots              ║
     ║  Version: 3.0 Ultimate             ║
     ╚════════════════════════════════════╝
     """)
