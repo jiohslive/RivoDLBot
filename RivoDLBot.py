@@ -564,15 +564,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             file_size = os.path.getsize(file_path) / (1024 * 1024)  # MB
             file_name = os.path.basename(file_path)
             
-            # Check file size for sending
-            if file_size > 50:  # Telegram limit is 50MB for bots
-                await update.message.reply_text(
-                    f"⚠️ *File size is {file_size:.1f}MB*\n"
-                    f"This exceeds Telegram's 50MB limit.\n"
-                    f"Please download smaller videos.",
-                    parse_mode=ParseMode.MARKDOWN
-                )
-            else:
                 with open(file_path, 'rb') as f:
                     if extract_audio:
                         await update.message.reply_audio(
@@ -583,11 +574,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                             parse_mode=ParseMode.MARKDOWN
                         )
                     else:
-                        await update.message.reply_video(
-                            video=f,
+                        await update.message.reply_document(
+                            document=f,
                             caption=f"📥 *Download Successful!*\n📏 Size: {file_size:.1f}MB",
                             parse_mode=ParseMode.MARKDOWN,
-                            supports_streaming=True
                         )
                 
                 # Send stylish footer
