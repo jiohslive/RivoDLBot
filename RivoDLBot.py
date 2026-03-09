@@ -548,7 +548,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "age_restricted": "❌ *Age-restricted content.*",
                 "unknown": "❌ *Download failed.*\nPlease check the URL and try again."
             }
-try:
+
+            try:
     await processing_msg.delete()
 
     file_size = os.path.getsize(file_path) / (1024 * 1024)
@@ -558,16 +559,17 @@ try:
         if extract_audio:
             await update.message.reply_audio(
                 audio=f,
-                caption=f"🎵 Size: {file_size:.1f}MB"
+                caption=f"🎵 Converted to MP3\n📏 Size: {file_size:.1f}MB"
             )
         else:
             await update.message.reply_document(
                 document=f,
-                caption=f"📥 Download Successful\n📏 {file_size:.1f}MB"
+                caption=f"📥 Download Successful\n📏 Size: {file_size:.1f}MB"
             )
 
 except Exception as e:
-    await update.message.reply_text(f"❌ Error: {e}")
+    print(e)
+    await update.message.reply_text("❌ Download failed")
                          
            # Send stylish footer
                 footer = (
